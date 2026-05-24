@@ -49,6 +49,8 @@ This project is already configured with a GitHub Actions workflow:
    GitHub Actions
    ```
 
+   If the Pages screen only shows `Add domain`, that can still be normal after an Actions-based deployment. The important place to check is the repository `Actions` tab. The workflow uses `actions/configure-pages`, `actions/upload-pages-artifact`, and `actions/deploy-pages` to publish the site.
+
 7. Go to the `Actions` tab and wait for `Deploy to GitHub Pages` to complete.
 
 8. Your site will be available at a URL like:
