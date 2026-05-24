@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shellCoffeeQualityControlPrototype version="1.0" generatedFor="Shell South Africa" dataType="mock">
+  <description>
+    Prototype XML export for the Shell garage coffee quality-control dashboard. Scores use fake data and are stored as decimal rates where 0.90 equals 90%.
+  </description>
+
+  <survey>
+    <urlPattern>/?view=survey&amp;branch_id={branch_id}</urlPattern>
+    <requiresLogin>false</requiresLogin>
+    <storageMode>local_state_or_mock_data</storageMode>
+    <questions>
+      <question id="q1" categoryKey="coffee_quality_score" type="yes_no" required="true">Was your coffee enjoyable?</question>
+      <question id="q2" categoryKey="speed_score" type="yes_no" required="true">Were you served quickly enough?</question>
+      <question id="q3" categoryKey="staff_service_score" type="yes_no" required="true">Was the staff friendly and helpful?</question>
+      <question id="q4" categoryKey="cleanliness_score" type="yes_no" required="true">Was the coffee area clean and comfortable?</question>
+      <question id="q5" categoryKey="buy_again" type="yes_no" required="false">Would you buy coffee from this Shell again?</question>
+      <commentBox required="false" recommendedWhenAnyAnswerIsNo="true" />
+    </questions>
+  </survey>
+
+  <scoringLogic>
+    <answer value="yes" numericValue="1" />
+    <answer value="no" numericValue="0" />
+    <categoryScore formula="yes_responses / total_responses" />
+    <overallScore formula="average(coffee_quality_score, speed_score, staff_service_score, cleanliness_score)" />
+  </scoringLogic>
+
+  <thresholds>
+    <status name="Excellent" rule="overall_score &gt;= 0.90" />
+    <status name="Healthy" rule="overall_score &gt;= 0.80 and overall_score &lt; 0.90" />
+    <status name="Watchlist" rule="overall_score &gt;= 0.70 and overall_score &lt; 0.80" />
+    <status name="Intervention Required" rule="overall_score &lt; 0.70" />
+    <flag name="Low Confidence" rule="monthly_response_count &lt; 30" />
+    <flag name="Critical Category" rule="any category score &lt; 0.65" />
+  </thresholds>
+
+  <outlierLogic>
+    <boxAndWhisker q1="25th_percentile" q3="75th_percentile" iqr="q3 - q1" />
+    <topOutlier rule="score &gt; q3 + 1.5 * iqr" marker="star" />
+    <bottomOutlier rule="score &lt; q1 - 1.5 * iqr" marker="cross" />
+    <normalPoint marker="circle" />
+  </outlierLogic>
+
+  <branches count="42">
+    <branch branch_id="SHELL001" branch_name="Shell Bryanston" region="Gauteng" city="Johannesburg" monthly_response_count="146" coffee_quality_score="0.96" speed_score="0.91" staff_service_score="0.95" cleanliness_score="0.93" overall_score="0.9375" status="Excellent" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL002" branch_name="Shell Rosebank" region="Gauteng" city="Johannesburg" monthly_response_count="128" coffee_quality_score="0.91" speed_score="0.86" staff_service_score="0.89" cleanliness_score="0.88" overall_score="0.8850" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL003" branch_name="Shell Boksburg East" region="Gauteng" city="Boksburg" monthly_response_count="88" coffee_quality_score="0.67" speed_score="0.71" staff_service_score="0.74" cleanliness_score="0.69" overall_score="0.7025" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL004" branch_name="Shell Pretoria Hatfield" region="Gauteng" city="Pretoria" monthly_response_count="112" coffee_quality_score="0.86" speed_score="0.79" staff_service_score="0.83" cleanliness_score="0.81" overall_score="0.8225" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL005" branch_name="Shell Centurion Mall" region="Gauteng" city="Centurion" monthly_response_count="74" coffee_quality_score="0.78" speed_score="0.82" staff_service_score="0.76" cleanliness_score="0.80" overall_score="0.7900" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL006" branch_name="Shell Sandton Drive" region="Gauteng" city="Sandton" monthly_response_count="156" coffee_quality_score="0.94" speed_score="0.90" staff_service_score="0.92" cleanliness_score="0.91" overall_score="0.9175" status="Excellent" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL007" branch_name="Shell Midrand N1" region="Gauteng" city="Midrand" monthly_response_count="41" coffee_quality_score="0.73" speed_score="0.64" staff_service_score="0.78" cleanliness_score="0.72" overall_score="0.7175" status="Watchlist" low_confidence="false" critical_categories="Speed" />
+    <branch branch_id="SHELL008" branch_name="Shell Soweto Maponya" region="Gauteng" city="Soweto" monthly_response_count="62" coffee_quality_score="0.82" speed_score="0.77" staff_service_score="0.80" cleanliness_score="0.74" overall_score="0.7825" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL009" branch_name="Shell Durban North" region="KwaZulu-Natal" city="Durban" monthly_response_count="119" coffee_quality_score="0.90" speed_score="0.87" staff_service_score="0.88" cleanliness_score="0.90" overall_score="0.8875" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL010" branch_name="Shell Umhlanga Ridge" region="KwaZulu-Natal" city="Umhlanga" monthly_response_count="132" coffee_quality_score="0.93" speed_score="0.88" staff_service_score="0.91" cleanliness_score="0.92" overall_score="0.9100" status="Excellent" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL011" branch_name="Shell Pietermaritzburg Central" region="KwaZulu-Natal" city="Pietermaritzburg" monthly_response_count="58" coffee_quality_score="0.76" speed_score="0.72" staff_service_score="0.79" cleanliness_score="0.70" overall_score="0.7425" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL012" branch_name="Shell Ballito Junction" region="KwaZulu-Natal" city="Ballito" monthly_response_count="83" coffee_quality_score="0.87" speed_score="0.83" staff_service_score="0.85" cleanliness_score="0.84" overall_score="0.8475" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL013" branch_name="Shell Pinetown M13" region="KwaZulu-Natal" city="Pinetown" monthly_response_count="26" coffee_quality_score="0.81" speed_score="0.69" staff_service_score="0.73" cleanliness_score="0.77" overall_score="0.7500" status="Watchlist" low_confidence="true" critical_categories="" />
+    <branch branch_id="SHELL014" branch_name="Shell Richards Bay Harbour" region="KwaZulu-Natal" city="Richards Bay" monthly_response_count="49" coffee_quality_score="0.74" speed_score="0.70" staff_service_score="0.68" cleanliness_score="0.71" overall_score="0.7075" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL015" branch_name="Shell Cape Town Waterfront" region="Western Cape" city="Cape Town" monthly_response_count="171" coffee_quality_score="0.97" speed_score="0.92" staff_service_score="0.94" cleanliness_score="0.95" overall_score="0.9450" status="Excellent" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL016" branch_name="Shell Stellenbosch" region="Western Cape" city="Stellenbosch" monthly_response_count="101" coffee_quality_score="0.92" speed_score="0.84" staff_service_score="0.90" cleanliness_score="0.89" overall_score="0.8875" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL017" branch_name="Shell Bellville N1" region="Western Cape" city="Bellville" monthly_response_count="67" coffee_quality_score="0.80" speed_score="0.75" staff_service_score="0.77" cleanliness_score="0.73" overall_score="0.7625" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL018" branch_name="Shell George Garden Route" region="Western Cape" city="George" monthly_response_count="94" coffee_quality_score="0.88" speed_score="0.82" staff_service_score="0.86" cleanliness_score="0.87" overall_score="0.8575" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL019" branch_name="Shell Paarl Main Road" region="Western Cape" city="Paarl" monthly_response_count="37" coffee_quality_score="0.79" speed_score="0.66" staff_service_score="0.72" cleanliness_score="0.76" overall_score="0.7325" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL020" branch_name="Shell Worcester N1" region="Western Cape" city="Worcester" monthly_response_count="24" coffee_quality_score="0.69" speed_score="0.62" staff_service_score="0.67" cleanliness_score="0.65" overall_score="0.6575" status="Intervention Required" low_confidence="true" critical_categories="Speed" />
+    <branch branch_id="SHELL021" branch_name="Shell Gqeberha Beachfront" region="Eastern Cape" city="Gqeberha" monthly_response_count="97" coffee_quality_score="0.87" speed_score="0.80" staff_service_score="0.85" cleanliness_score="0.82" overall_score="0.8350" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL022" branch_name="Shell East London Hemingways" region="Eastern Cape" city="East London" monthly_response_count="64" coffee_quality_score="0.77" speed_score="0.74" staff_service_score="0.79" cleanliness_score="0.72" overall_score="0.7550" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL023" branch_name="Shell Mthatha Plaza" region="Eastern Cape" city="Mthatha" monthly_response_count="28" coffee_quality_score="0.71" speed_score="0.63" staff_service_score="0.66" cleanliness_score="0.68" overall_score="0.6700" status="Intervention Required" low_confidence="true" critical_categories="Speed" />
+    <branch branch_id="SHELL024" branch_name="Shell Queenstown N6" region="Eastern Cape" city="Komani" monthly_response_count="35" coffee_quality_score="0.75" speed_score="0.70" staff_service_score="0.73" cleanliness_score="0.69" overall_score="0.7175" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL025" branch_name="Shell Bloemfontein Nelson Mandela" region="Free State" city="Bloemfontein" monthly_response_count="86" coffee_quality_score="0.84" speed_score="0.78" staff_service_score="0.82" cleanliness_score="0.80" overall_score="0.8100" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL026" branch_name="Shell Welkom Goldfields" region="Free State" city="Welkom" monthly_response_count="44" coffee_quality_score="0.72" speed_score="0.68" staff_service_score="0.71" cleanliness_score="0.66" overall_score="0.6925" status="Intervention Required" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL027" branch_name="Shell Bethlehem N5" region="Free State" city="Bethlehem" monthly_response_count="22" coffee_quality_score="0.80" speed_score="0.73" staff_service_score="0.75" cleanliness_score="0.78" overall_score="0.7650" status="Watchlist" low_confidence="true" critical_categories="" />
+    <branch branch_id="SHELL028" branch_name="Shell Kimberley Diamond" region="Northern Cape" city="Kimberley" monthly_response_count="59" coffee_quality_score="0.81" speed_score="0.76" staff_service_score="0.78" cleanliness_score="0.77" overall_score="0.7800" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL029" branch_name="Shell Upington Kalahari" region="Northern Cape" city="Upington" monthly_response_count="31" coffee_quality_score="0.73" speed_score="0.69" staff_service_score="0.70" cleanliness_score="0.72" overall_score="0.7100" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL030" branch_name="Shell Springbok N7" region="Northern Cape" city="Springbok" monthly_response_count="18" coffee_quality_score="0.68" speed_score="0.61" staff_service_score="0.65" cleanliness_score="0.63" overall_score="0.6425" status="Intervention Required" low_confidence="true" critical_categories="Speed,Cleanliness" />
+    <branch branch_id="SHELL031" branch_name="Shell Polokwane Gateway" region="Limpopo" city="Polokwane" monthly_response_count="92" coffee_quality_score="0.86" speed_score="0.83" staff_service_score="0.84" cleanliness_score="0.81" overall_score="0.8350" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL032" branch_name="Shell Tzaneen Junction" region="Limpopo" city="Tzaneen" monthly_response_count="47" coffee_quality_score="0.78" speed_score="0.72" staff_service_score="0.76" cleanliness_score="0.74" overall_score="0.7500" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL033" branch_name="Shell Thohoyandou" region="Limpopo" city="Thohoyandou" monthly_response_count="29" coffee_quality_score="0.70" speed_score="0.64" staff_service_score="0.69" cleanliness_score="0.67" overall_score="0.6750" status="Intervention Required" low_confidence="true" critical_categories="Speed" />
+    <branch branch_id="SHELL034" branch_name="Shell Nelspruit Riverside" region="Mpumalanga" city="Mbombela" monthly_response_count="105" coffee_quality_score="0.89" speed_score="0.85" staff_service_score="0.88" cleanliness_score="0.86" overall_score="0.8700" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL035" branch_name="Shell Witbank Highveld" region="Mpumalanga" city="Emalahleni" monthly_response_count="53" coffee_quality_score="0.75" speed_score="0.71" staff_service_score="0.73" cleanliness_score="0.69" overall_score="0.7200" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL036" branch_name="Shell Secunda Energy" region="Mpumalanga" city="Secunda" monthly_response_count="39" coffee_quality_score="0.80" speed_score="0.77" staff_service_score="0.79" cleanliness_score="0.76" overall_score="0.7800" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL037" branch_name="Shell Rustenburg Platinum" region="North West" city="Rustenburg" monthly_response_count="71" coffee_quality_score="0.82" speed_score="0.75" staff_service_score="0.80" cleanliness_score="0.78" overall_score="0.7875" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL038" branch_name="Shell Potchefstroom Campus" region="North West" city="Potchefstroom" monthly_response_count="46" coffee_quality_score="0.79" speed_score="0.74" staff_service_score="0.76" cleanliness_score="0.75" overall_score="0.7600" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL039" branch_name="Shell Mahikeng Central" region="North West" city="Mahikeng" monthly_response_count="27" coffee_quality_score="0.69" speed_score="0.62" staff_service_score="0.68" cleanliness_score="0.66" overall_score="0.6625" status="Intervention Required" low_confidence="true" critical_categories="Speed" />
+    <branch branch_id="SHELL040" branch_name="Shell Klerksdorp N12" region="North West" city="Klerksdorp" monthly_response_count="57" coffee_quality_score="0.76" speed_score="0.70" staff_service_score="0.74" cleanliness_score="0.71" overall_score="0.7275" status="Watchlist" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL041" branch_name="Shell Vanderbijlpark Vaal" region="Gauteng" city="Vanderbijlpark" monthly_response_count="65" coffee_quality_score="0.83" speed_score="0.78" staff_service_score="0.81" cleanliness_score="0.79" overall_score="0.8025" status="Healthy" low_confidence="false" critical_categories="" />
+    <branch branch_id="SHELL042" branch_name="Shell Mossel Bay Harbour" region="Western Cape" city="Mossel Bay" monthly_response_count="33" coffee_quality_score="0.85" speed_score="0.81" staff_service_score="0.83" cleanliness_score="0.82" overall_score="0.8275" status="Healthy" low_confidence="false" critical_categories="" />
+  </branches>
+
+  <negativeCommentExamples>
+    <comment>Queue moved slowly during the morning rush.</comment>
+    <comment>Coffee tasted weak and the milk station needed attention.</comment>
+    <comment>Staff member seemed distracted and did not greet customers.</comment>
+    <comment>Counter area was sticky and bins were full.</comment>
+    <comment>The machine was out of cups and nobody noticed quickly.</comment>
+    <comment>Coffee was lukewarm by the time I reached the till.</comment>
+  </negativeCommentExamples>
+
+  <monthlyReportLogic>
+    <section name="Executive summary" />
+    <section name="Top 3 facilities by category" />
+    <section name="Bottom 3 facilities by category" />
+    <section name="Branches requiring intervention" />
+    <section name="Recommended inspections" />
+    <bestPracticeTransfer>
+      <rule>For each category, identify the top 3 branches and bottom 3 branches.</rule>
+      <rule>Inspect the top branches and document best practices.</rule>
+      <rule>Apply documented practices to bottom-performing branches and schedule operational review.</rule>
+      <example>If Shell Bryanston is top 3 for Coffee Quality and Shell Boksburg East is bottom 3, inspect Shell Bryanston coffee preparation process and apply the learnings to Shell Boksburg East.</example>
+    </bestPracticeTransfer>
+  </monthlyReportLogic>
+</shellCoffeeQualityControlPrototype>
